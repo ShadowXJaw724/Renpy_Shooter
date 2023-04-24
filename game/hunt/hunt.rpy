@@ -8,15 +8,12 @@ transform moving_target:
     xpos -300
     repeat
 
-label begin_hunt:
-    
-    $ shots_fired = 0
-    $ targets_hit = 0
-    call hunting
-    return
+# Edit By ShadowyJaw - Removed the unneeded label and added it to the main label.
+# Without updating to the newest renpy version, there is not much we can really improve. 
     
 label hunting:
-    
+    $ shots_fired = 0
+    $ targets_hit = 0
     scene black
     show target at moving_target
     $ position = At(ImageReference("target"), moving_target)
@@ -26,22 +23,18 @@ label hunting:
     $ fired_gun = ui.interact()
     
     show expression position
-    if position.xpos > 950:
-        if position.xpos < 1100:
-            with vpunch
-            "You Hit. "
-            $ shots_fired = shots_fired + 1
-            $ targets_hit = targets_hit + 1
-            if shots_fired >= 3:
-                return
-            call hunting
+    if position.xpos > 950 and position.xpos < 1100:
+        with vpunch
+        "You Hit. "
+        $ shots_fired = shots_fired + 1
+        $ targets_hit = targets_hit + 1
+        if shots_fired >= 3:
+            return
+        call hunting
     
     with vpunch
     "You Missed."
     $ shots_fired = shots_fired + 1
-    if shots_fired >= 3:
-                return
-    
-    call hunting
-    
+    if shots_fired == 3:
+        return   
     return
