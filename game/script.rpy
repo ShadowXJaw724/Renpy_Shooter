@@ -44,7 +44,6 @@ label end(pause_length=2.0):
     stop music fadeout 1.0
     scene black
     show ending
-    with dissolve_scene_full
     pause pause_length
     $ quick_menu = True
     return
